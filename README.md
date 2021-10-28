@@ -7,6 +7,9 @@
 [![play.baptecraft.ovh](https://img.shields.io/endpoint?style=for-the-badge&url=https://minecraft-server-status-badge.vercel.app/api/server/play.baptecraft.ovh?port?25565)](https://baptecraft.ovh/)
 [![Commits](https://img.shields.io/github/commit-activity/m/baptiste313/baptecraft?label=commits&style=for-the-badge)](https://github.com/baptiste313/baptecraft/commits)
 
+
+[![](https://visitor-badge.laobi.icu/badge?page_id=baptiste313.baptecraft)]()
+
 </div>
 
 ```bash
