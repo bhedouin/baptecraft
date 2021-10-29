@@ -1,6 +1,6 @@
 <div align="center">
 
-[![](https://i.imgur.com/Qei8FN7.gif)](https://baptecraft.ovh/)
+[![](https://raw.githubusercontent.com/baptiste313/baptecraft/main/.github/banner.gif)](https://baptecraft.ovh/)
 
 [![Visitor Badge Reloaded](https://visitor-badge-reloaded.herokuapp.com/badge?page_id=baptiste313.baptecraft&style=for-the-badge)](https://visitor-badge-reloaded.herokuapp.com/badge?page_id=baptiste313.baptecraft&style=for-the-badge)
 [![Serveur Discord](https://shields.io/discord/823450591601885194?style=for-the-badge)](https://discord.gg/tewEz75czN)
