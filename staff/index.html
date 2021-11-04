@@ -5,7 +5,6 @@
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
         <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
-        <meta name="apple-mobile-web-app-capable" content="yes"/>
         <!-- Chrome, Firefox OS and Opera mobile address bar theming -->
         <meta name="theme-color" content="#111417"/>
         <!-- Windows Phone mobile address bar theming -->
@@ -14,20 +13,22 @@
         <meta name="apple-mobile-web-app-status-bar-style" content="#111417"/>
         <!-- SEO -->
         <meta name="description" content="Serveur de jeu Minecraft Java Edition en version 1.17.1 ! Survie et Créatif. Pas de Pay-to-win, uniquement du fun !"/>
+        <meta name="author" content=""/>
+        <meta name="keywords" content=""/>
         <!-- Open graph -->
         <meta property="og:type" content="website"/>
         <meta property="og:url" content="/staff"/>
         <meta property="og:title" content="Staff | Baptecraft.ovh"/>
         <meta property="og:description" content="Serveur de jeu Minecraft Java Edition en version 1.17.1 ! Survie et Créatif. Pas de Pay-to-win, uniquement du fun !"/>
-        <meta property="og:image" content="https://i.imgur.com/Qei8FN7.gif"/>
+        <meta property="og:image" content="https://baptecraft.ovh/959CP.webp"/>
+        <meta property="og:image:type" content="image/webp"/>
         <meta name="twitter:card" content="summary_large_image"/>
         <!-- Fav and Title -->
-        <link rel="apple-touch-icon" sizes="180x180" href="static/apple-touch-icon.png"/>
-        <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.discordapp.com/icons/823450591601885194/50e6cfdce97510867060dd4b4a7eabc50eb6.png?size=32"/>
-        <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.discordapp.com/icons/823450591601885194/50e6cfdce97510867060dd4b4a7eabc58add.png?size=16"/>
-        <link rel="shortcut icon" href="static/favicon.ico"/>
+        <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicons/apple-touch-icon.png"/>
+        <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicons/favicon-32x32.png"/>
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16x16.png"/>
+        <link rel="shortcut icon" href="../assets/favicons/favicon.ico"/>
         <title>Staff | Baptecraft.ovh</title>
-        <link href="static/stylesheet/style.css" rel="stylesheet"/>
         <!-- Halfmoon CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Halfmoon/1.1.1/css/halfmoon.min.css" integrity="sha512-Kaju/JzlErKhC47smofkXAdSkvILovmvh2nnok6rgN79oB3Co/T7Pm7Ns8dcpNEN3VTVZDw2ilrUDByzInEabg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <!-- Font awesome -->
@@ -45,8 +46,8 @@
                         <span aria-hidden="true">&times;</span>
                     </a>
                     <h5 class="modal-title">Jouer à Baptecraft</h5>
-                    <img src="https://i.imgur.com/mByJnWP.gif" class="img-fluid rounded hidden-dm mr-5 mr-sm-10" alt="" />
-                    <img src="https://i.imgur.com/re4TvEH.gif" class="img-fluid rounded hidden-lm mr-5 mr-sm-10" alt=""/>
+                    <img src="../23C2G.webp" class="img-fluid rounded hidden-dm mr-5 mr-sm-10" alt="" />
+                    <img src="../P825R.webp" class="img-fluid rounded hidden-lm mr-5 mr-sm-10" alt=""/>
                     <p>Pour venir avec nous, lance ton Launcher et entre l’IP de Baptecraft !</p>
                     <p>
                         Si tu as acheté Minecraft, tu peux te connecter avec le
@@ -63,28 +64,45 @@
             </div>
         </div>
         <div class="page-wrapper with-navbar with-sidebar">
-            <div class="sticky-alerts"></div>
             <nav class="navbar">
                 <button id="toggle-sidebar-btn" class="btn btn-action" type="button" aria-label="Toggle Sidebar" onclick="halfmoon.toggleSidebar()">
                     <i class="fa fa-bars" aria-hidden="true"></i>
                 </button>
                 <a href="#" class="navbar-brand ml-10 ml-sm-15">
-                    <img src="https://i.imgur.com/mByJnWP.gif" class="hidden-dm mr-5 mr-sm-10" alt=""/>
-                    <img src="https://i.imgur.com/Qei8FN7.gif" class="hidden-lm mr-5 mr-sm-10" alt=""/>
-                    <span class="badge badge-pill font-size-12 text-monospace px-5 px-sm-10">1.17.1</span>
+                    <img src="../23C2G.webp" class="hidden-dm mr-5 mr-sm-10" alt=""/>
+                    <img src="../959CP.webp" class="hidden-lm mr-5 mr-sm-10" alt=""/>
                 </a>
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45" height="20" role="img" aria-label="1.17.1">
+                    <title>1.17.1</title>
+                    <linearGradient id="s" x2="0" y2="100%">
+                        <stop offset="0" stop-color="#bbb" stop-opacity=".1"/>
+                        <stop offset="1" stop-opacity=".1"/>
+                    </linearGradient>
+                    <clipPath id="r">
+                        <rect width="45" height="20" rx="3" fill="#fff"/>
+                    </clipPath>
+                    <g clip-path="url(#r)">
+                        <rect width="0" height="20" fill="#9f9f9f"/>
+                        <rect x="0" width="45" height="20" fill="#9f9f9f"/>
+                        <rect width="45" height="20" fill="url(#s)"/>
+                    </g>
+                    <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="110">
+                        <text aria-hidden="true" x="225" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="350">1.17.1</text>
+                        <text x="225" y="140" transform="scale(.1)" fill="#fff" textLength="350">1.17.1</text>
+                    </g>
+                </svg>
                 <ul class="navbar-nav hidden-sm-and-down">
                     <li class="nav-item">
                         <a href="/" class="nav-link">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a href="https://map.baptecraft.ovh/#v3_baptecraft;surface" class="nav-link">Dynmap</a>
+                        <a href="https://map.baptecraft.ovh/" class="nav-link">Dynmap</a>
                     </li>
                     <li class="nav-item active">
-                        <a href="staff/" class="nav-link">Staff</a>
+                        <a href="../staff/" class="nav-link">Staff</a>
                     </li>
                     <li class="nav-item">
-                        <a href="aide/" class="nav-link">Aide</a>
+                        <a href="../aide/" class="nav-link active">Aide</a>
                     </li>
                 </ul>
                 <div class="navbar-content ml-auto">
@@ -101,10 +119,10 @@
                             <i class="fa fa-angle-down" aria-hidden="true"></i>
                         </button>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-toggle-btn">
-                            <a href="index.html" class="dropdown-item">Accueil</a>
-                            <a href="https://map.baptecraft.ovh/#v3_baptecraft;surface" class="dropdown-item">Dynmap</a>
-                            <a href="staff/" class="dropdown-item">Staff</a>
-                            <a href="aide/" class="dropdown-item">Aide</a>
+                            <a href="/" class="dropdown-item">Accueil</a>
+                            <a href="https://map.baptecraft.ovh/" class="dropdown-item">Dynmap</a>
+                            <a href="../staff/" class="dropdown-item">Staff</a>
+                            <a href="../aide/" class="dropdown-item">Aide</a>
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-content">
                                 <a href="#Download" class="btn btn-primary btn-download-sm" role="button">
@@ -120,10 +138,10 @@
                 <div class="sidebar-menu list">
                     <h5 class="sidebar-title">Sur cette page</h5>
                     <div class="sidebar-divider"></div>
-                    <a href="#Propriétaire" class="sidebar-link">Propriétaire</a>
-                    <a href="#Copropriétaire" class="sidebar-link">Copropriétaire</a>
-                    <a href="#Administrateur-principal" class="sidebar-link">Administrateur principal</a>
-                    <a href="#Administrateur" class="sidebar-link">Administrateur</a><br />
+                    <span class="sidebar-link">Propriétaire</span>
+                    <span class="sidebar-link">Copropriétaire</span>
+                    <span class="sidebar-link">Administrateur principal</span>
+                    <span class="sidebar-link">Administrateur</span><br />
                     <h5 class="sidebar-title">Quelques liens utiles</h5>
                     <div class="sidebar-divider"></div>
                     <a href="https://discord.gg/tewEz75czN" class="sidebar-link sidebar-link-with-icon">
@@ -132,13 +150,25 @@
                         </span>
                         Discord
                     </a>
-                    <a href="cookies/" class="sidebar-link sidebar-link-with-icon">
+                    <a href="../cookies/" class="sidebar-link sidebar-link-with-icon">
                         <span class="sidebar-icon">
                             <i class="fas fa-cookie" aria-hidden="true"></i>
                         </span>
                         Cookies
                     </a>
-                    <a href="politique-de-confidentialité/" class="sidebar-link sidebar-link-with-icon">
+                    <a href="../documents/" class="sidebar-link sidebar-link-with-icon">
+                        <span class="sidebar-icon">
+                            <i class="fas fa-folder" aria-hidden="true"></i>
+                        </span>
+                        Documents
+                    </a>
+                    <a href="https://analytics.baptecraft.ovh/server/baptecraft/" class="sidebar-link sidebar-link-with-icon">
+                        <span class="sidebar-icon">
+                            <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                        </span>
+                        Plan Player Analytics
+                    </a>
+                    <a href="../politique-de-confidentialité/" class="sidebar-link sidebar-link-with-icon">
                         <span class="sidebar-icon">
                             <i class="fas fa-fingerprint" aria-hidden="true"></i>
                         </span>
@@ -148,30 +178,373 @@
             </div>
             <div class="content-wrapper">
                 <div class="container-fluid">
-                    <div class="content">
-                        <div class="row row-eq-spacing">
-                            <div class="col-sm">
-                                <div class="w-250 mw-full">
-                                    <div class="card p-0">
-                                        <div class="text-center pt-15 pb-15">
-                                            <div class="dropdown dropright with-arrow toggle-on-hover">
-                                                <a href="#" data-toggle="dropdown" id="avatar-popover-toggle" aria-haspopup="true" aria-expanded="false">
-                                                    <img src="../../cdn.discordapp.com/avatars/797120015609364490/ab1fbdd6a260985456c8c83c90204665.png" class="img-fluid rounded-top" alt=""/>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-center" aria-labelledby="avatar-popover-toggle">
-                                                    <h6 class="dropdown-header">baptiste#4107</h6>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a href="#" class="dropdown-item">Présentation (en construction)</a>
-                                                    <a href="https://discord.com/users/797120015609364490" class="dropdown-item">Contactez-le par Discord</a>
-                                                </div>
-                                            </div>
-                                            <h3 class="content-title pt-15">Baptiste</h3>
-                                            <a id="Propriétaire" href="#Propriétaire" class="badge badge-pill">
-                                                <i class="fas fa-user-tag text-primary mr-5" aria-hidden="true"></i>
-                                                Propriétaire
-                                            </a>
-                                        </div>
-                                    </div>
+                    <div class="row">
+                        <div class="col-sm card">
+                            <div class="box">
+                                <div class="text-center">
+                                    <img class="img-fluid rounded" src="../avatars/7712ee12-53fa-3038-b9da-e13eeddcb198.png"/>
+                                    <h1 class="font-size-24">BAPTISTE</h1>
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=Temps%20Actif%20Total&query=%24.online_activity[%27playtime_30d%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D7712ee12-53fa-3038-b9da-e13eeddcb198" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=&query=%24.info[%27activity_index_group%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D7712ee12-53fa-3038-b9da-e13eeddcb198&color=red" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=en%20ligne&query=%24.info[%27online%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D7712ee12-53fa-3038-b9da-e13eeddcb198&color=green" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=Derni%C3%A8re%20visite&query=%24.info[%27last_seen%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D7712ee12-53fa-3038-b9da-e13eeddcb198" alt="" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="124" height="28" role="img" aria-label="PROPRIÉTAIRE">
+                                        <title>PROPRIÉTAIRE</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="124" height="28" fill="#bc2e25"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="620" y="175" textLength="1000" fill="#fff" font-weight="bold">PROPRIÉTAIRE</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="145.5" height="28" role="img" aria-label="ADMINISTRATEUR">
+                                        <title>ADMINISTRATEUR</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="145.5" height="28" fill="#1f8b4c"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="727.5" y="175" textLength="1215" fill="#fff" font-weight="bold">ADMINISTRATEUR</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="73.5" height="28" role="img" aria-label="SURVIE">
+                                        <title>SURVIE</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="73.5" height="28" fill="#ad1457"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="367.5" y="175" textLength="495" fill="#fff" font-weight="bold">SURVIE</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80.75" height="28" role="img" aria-label="CRÉATIF">
+                                        <title>CRÉATIF</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="80.75" height="28" fill="#c27c0e"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="403.75" y="175" textLength="567.5" fill="#fff" font-weight="bold">CRÉATIF</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="118.75" height="28" role="img" aria-label="DÉVELOPPEUR">
+                                        <title>DÉVELOPPEUR</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="118.75" height="28" fill="#546e7a"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="593.75" y="175" textLength="947.5" fill="#fff" font-weight="bold">DÉVELOPPEUR</text>
+                                        </g>
+                                    </svg>
+                                    <a href="https://discord.com/users/797120015609364490">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="84.75" height="28" role="img" aria-label="DISCORD">
+                                            <title>DISCORD</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="84.75" height="28" fill="#5865f2"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="423.75" y="175" textLength="607.5" fill="#fff" font-weight="bold">DISCORD</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                    <a href="https://analytics.baptecraft.ovh/player/7712ee12-53fa-3038-b9da-e13eeddcb198">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58" height="28" role="img" aria-label="PLAN">
+                                            <title>PLAN</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="58" height="28" fill="#368f11"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="290" y="175" textLength="340" fill="#fff" font-weight="bold">PLAN</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                    <a href="https://github.com/baptiste313/">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="75.5" height="28" role="img" aria-label="GITHUB">
+                                            <title>GITHUB</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="75.5" height="28" fill="#1b1f23"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="377.5" y="175" textLength="515" fill="#fff" font-weight="bold">GITHUB</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm card">
+                            <div class="box">
+                                <div class="text-center">
+                                    <img class="img-fluid rounded" src="../avatars/e4ebe9f6-a56a-32ab-ab56-c74f6dfd5c53.png"/>
+                                    <h1 class="font-size-24">ENZODJSOS</h1>
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=Temps%20Actif%20Total&query=%24.online_activity[%27playtime_30d%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3De4ebe9f6-a56a-32ab-ab56-c74f6dfd5c53" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=&query=%24.info[%27activity_index_group%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3De4ebe9f6-a56a-32ab-ab56-c74f6dfd5c53&color=red" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=en%20ligne&query=%24.info[%27online%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3De4ebe9f6-a56a-32ab-ab56-c74f6dfd5c53&color=green" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=Derni%C3%A8re%20visite&query=%24.info[%27last_seen%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3De4ebe9f6-a56a-32ab-ab56-c74f6dfd5c53" alt="" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="142.5" height="28" role="img" aria-label="COPROPRIÉTAIRE">
+                                        <title>COPROPRIÉTAIRE</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="142.5" height="28" fill="#bb5b0c"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="712.5" y="175" textLength="1185" fill="#fff" font-weight="bold">COPROPRIÉTAIRE</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="145.5" height="28" role="img" aria-label="ADMINISTRATEUR">
+                                        <title>ADMINISTRATEUR</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="145.5" height="28" fill="#1f8b4c"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="727.5" y="175" textLength="1215" fill="#fff" font-weight="bold">ADMINISTRATEUR</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="73.5" height="28" role="img" aria-label="SURVIE">
+                                        <title>SURVIE</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="73.5" height="28" fill="#ad1457"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="367.5" y="175" textLength="495" fill="#fff" font-weight="bold">SURVIE</text>
+                                        </g>
+                                    </svg>
+                                    <a href="https://discord.com/users/704662978842066964">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="84.75" height="28" role="img" aria-label="DISCORD">
+                                            <title>DISCORD</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="84.75" height="28" fill="#5865f2"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="423.75" y="175" textLength="607.5" fill="#fff" font-weight="bold">DISCORD</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                    <a href="https://analytics.baptecraft.ovh/player/e4ebe9f6-a56a-32ab-ab56-c74f6dfd5c53">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58" height="28" role="img" aria-label="PLAN">
+                                            <title>PLAN</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="58" height="28" fill="#368f11"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="290" y="175" textLength="340" fill="#fff" font-weight="bold">PLAN</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm card">
+                            <div class="box">
+                                <div class="text-center">
+                                    <img class="img-fluid rounded" src="../avatars/052c4b4f-04c1-3828-b357-2b7792b99d94.png"/>
+                                    <h1 class="font-size-24">LEX</h1>
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=Temps%20Actif%20Total&query=%24.online_activity[%27playtime_30d%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D052c4b4f-04c1-3828-b357-2b7792b99d94" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=&query=%24.info[%27activity_index_group%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D052c4b4f-04c1-3828-b357-2b7792b99d94&color=red" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=en%20ligne&query=%24.info[%27online%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D052c4b4f-04c1-3828-b357-2b7792b99d94&color=green" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=Derni%C3%A8re%20visite&query=%24.info[%27last_seen%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D052c4b4f-04c1-3828-b357-2b7792b99d94" alt="" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="224" height="28" role="img" aria-label="ADMINISTRATEUR PRINCIPAL">
+                                        <title>ADMINISTRATEUR PRINCIPAL</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="224" height="28" fill="#c27c0e"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="1120" y="175" textLength="2000" fill="#fff" font-weight="bold">ADMINISTRATEUR PRINCIPAL</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="73.5" height="28" role="img" aria-label="SURVIE">
+                                        <title>SURVIE</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="73.5" height="28" fill="#ad1457"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="367.5" y="175" textLength="495" fill="#fff" font-weight="bold">SURVIE</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80.75" height="28" role="img" aria-label="CRÉATIF">
+                                        <title>CRÉATIF</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="80.75" height="28" fill="#c27c0e"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="403.75" y="175" textLength="567.5" fill="#fff" font-weight="bold">CRÉATIF</text>
+                                        </g>
+                                    </svg>
+                                    <a href="https://discord.com/users/522737800894873600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="84.75" height="28" role="img" aria-label="DISCORD">
+                                            <title>DISCORD</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="84.75" height="28" fill="#5865f2"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="423.75" y="175" textLength="607.5" fill="#fff" font-weight="bold">DISCORD</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                    <a href="https://analytics.baptecraft.ovh/player/052c4b4f-04c1-3828-b357-2b7792b99d94">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58" height="28" role="img" aria-label="PLAN">
+                                            <title>PLAN</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="58" height="28" fill="#368f11"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="290" y="175" textLength="340" fill="#fff" font-weight="bold">PLAN</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm card">
+                            <div class="box">
+                                <div class="text-center">
+                                    <img class="img-fluid rounded" src="../avatars/e2c7d38d1ba17ea1c0363936ba7e39af.png"/>
+                                    <h1 class="font-size-24">MATÉO</h1>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="145.5" height="28" role="img" aria-label="ADMINISTRATEUR">
+                                        <title>ADMINISTRATEUR</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="145.5" height="28" fill="#1f8b4c"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="727.5" y="175" textLength="1215" fill="#fff" font-weight="bold">ADMINISTRATEUR</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="73.5" height="28" role="img" aria-label="SURVIE">
+                                        <title>SURVIE</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="73.5" height="28" fill="#ad1457"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="367.5" y="175" textLength="495" fill="#fff" font-weight="bold">SURVIE</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80.75" height="28" role="img" aria-label="CRÉATIF">
+                                        <title>CRÉATIF</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="80.75" height="28" fill="#c27c0e"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="403.75" y="175" textLength="567.5" fill="#fff" font-weight="bold">CRÉATIF</text>
+                                        </g>
+                                    </svg>
+                                    <a href="https://discord.com/users/522737800894873600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="84.75" height="28" role="img" aria-label="DISCORD">
+                                            <title>DISCORD</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="84.75" height="28" fill="#5865f2"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="423.75" y="175" textLength="607.5" fill="#fff" font-weight="bold">DISCORD</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                    <a href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58" height="28" role="img" aria-label="PLAN">
+                                            <title>PLAN</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="58" height="28" fill="#368f11"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="290" y="175" textLength="340" fill="#fff" font-weight="bold">PLAN</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm card">
+                            <div class="box">
+                                <div class="text-center">
+                                    <img class="img-fluid rounded" src="../avatars/3c5e006b449deeb3df96845d530527a2.png"/>
+                                    <h1 class="font-size-24">IROO</h1>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="145.5" height="28" role="img" aria-label="ADMINISTRATEUR">
+                                        <title>ADMINISTRATEUR</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="145.5" height="28" fill="#1f8b4c"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="727.5" y="175" textLength="1215" fill="#fff" font-weight="bold">ADMINISTRATEUR</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80.75" height="28" role="img" aria-label="CRÉATIF">
+                                        <title>CRÉATIF</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="80.75" height="28" fill="#c27c0e"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="403.75" y="175" textLength="567.5" fill="#fff" font-weight="bold">CRÉATIF</text>
+                                        </g>
+                                    </svg>
+                                    <a href="https://discord.com/users/522737800894873600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="84.75" height="28" role="img" aria-label="DISCORD">
+                                            <title>DISCORD</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="84.75" height="28" fill="#5865f2"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="423.75" y="175" textLength="607.5" fill="#fff" font-weight="bold">DISCORD</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                    <a href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58" height="28" role="img" aria-label="PLAN">
+                                            <title>PLAN</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="58" height="28" fill="#368f11"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="290" y="175" textLength="340" fill="#fff" font-weight="bold">PLAN</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm card">
+                            <div class="box">
+                                <div class="text-center">
+                                    <img class="img-fluid rounded" src="../avatars/04828731-e4bc-3eea-ac26-485057154550.png"/>
+                                    <h1 class="font-size-24">LUCAS</h1>
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=Temps%20Actif%20Total&query=%24.online_activity[%27playtime_30d%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D04828731-e4bc-3eea-ac26-485057154550" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=&query=%24.info[%27activity_index_group%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D04828731-e4bc-3eea-ac26-485057154550&color=red" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=en%20ligne&query=%24.info[%27online%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D04828731-e4bc-3eea-ac26-485057154550&color=green" alt="" />
+                                    <img class="img-fluid" src="https://badges.genua.fr/badge/dynamic/json?style=for-the-badge&label=Derni%C3%A8re%20visite&query=%24.info[%27last_seen%27]&url=https%3A%2F%2Fanalytics.baptecraft.ovh%2Fv1%2Fplayer%3Fplayer%3D04828731-e4bc-3eea-ac26-485057154550" alt="" />
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="145.5" height="28" role="img" aria-label="ADMINISTRATEUR">
+                                        <title>ADMINISTRATEUR</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="145.5" height="28" fill="#1f8b4c"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="727.5" y="175" textLength="1215" fill="#fff" font-weight="bold">ADMINISTRATEUR</text>
+                                        </g>
+                                    </svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="73.5" height="28" role="img" aria-label="SURVIE">
+                                        <title>SURVIE</title>
+                                        <g shape-rendering="crispEdges">
+                                            <rect width="73.5" height="28" fill="#ad1457"/>
+                                        </g>
+                                        <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                            <text transform="scale(.1)" x="367.5" y="175" textLength="495" fill="#fff" font-weight="bold">SURVIE</text>
+                                        </g>
+                                    </svg>
+                                    <a href="https://discord.com/users/522737800894873600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="84.75" height="28" role="img" aria-label="DISCORD">
+                                            <title>DISCORD</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="84.75" height="28" fill="#5865f2"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="423.75" y="175" textLength="607.5" fill="#fff" font-weight="bold">DISCORD</text>
+                                            </g>
+                                        </svg>
+                                    </a>
+                                    <a href="https://analytics.baptecraft.ovh/player/04828731-e4bc-3eea-ac26-485057154550">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="58" height="28" role="img" aria-label="PLAN">
+                                            <title>PLAN</title>
+                                            <g shape-rendering="crispEdges">
+                                                <rect width="58" height="28" fill="#368f11"/>
+                                            </g>
+                                            <g fill="#fff" text-anchor="middle" font-family="Roboto, sans-serif" text-rendering="geometricPrecision" font-size="100">
+                                                <text transform="scale(.1)" x="290" y="175" textLength="340" fill="#fff" font-weight="bold">PLAN</text>
+                                            </g>
+                                        </svg>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -179,45 +552,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Halfmoon/1.1.1/js/halfmoon.min.js" integrity="sha512-8fN/MQrHBCMmkx2t4QwGODGHwQf8VxCeNwNkJz0gjt5JrlUfJ5zNlMr9lrzhnl7DSN+5E16YmMHnfomnQmvSoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- Matomo -->
-    <script>
-        var _paq = window._paq = window._paq || [];
-        _paq.push([function () {
-            var self = this;
-            function getOriginalVisitorCookieTimeout() {
-                var now = new Date(),
-                    nowTs = Math.round(now.getTime() / 1000),
-                    visitorInfo = self.getVisitorInfo();
-                var createTs = parseInt(visitorInfo[2]);
-                var cookieTimeout = 33696000;
-                var originalTimeout = createTs + cookieTimeout - nowTs;
-                return originalTimeout;
-            }
-            this.setVisitorCookieTimeout(getOriginalVisitorCookieTimeout());
-        }]);
-        _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
-        _paq.push(["setCookieDomain", "*.baptecraft.ovh"]);
-        _paq.push(["setDomains", ["*.baptecraft.ovh"]]);
-        _paq.push(['trackPageView']);
-        _paq.push(['enableLinkTracking']);
-        (function () {
-            var u = "https:///hedouin.eu/matomo/";
-            _paq.push(['setTrackerUrl', u + 'matomo.php']);
-            _paq.push(['setSiteId', '1']);
-            var d = document,
-                g = d.createElement('script'),
-                s = d.getElementsByTagName('script')[0];
-            g.async = true;
-            g.src = u + 'matomo.js';
-            s.parentNode.insertBefore(g, s);
-        })();
-        </script>
-    <noscript>
-        <p>
-            <img src="https://hedouin.eu/matomo/matomo.php?idsite=1&amp;rec=1" style="border:0;" alt="" />
-        </p>
-    </noscript>
-</body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Halfmoon/1.1.1/js/halfmoon.min.js" integrity="sha512-8fN/MQrHBCMmkx2t4QwGODGHwQf8VxCeNwNkJz0gjt5JrlUfJ5zNlMr9lrzhnl7DSN+5E16YmMHnfomnQmvSoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    </body>
 </html>
