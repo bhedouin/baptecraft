@@ -23,7 +23,7 @@ case "$response" in
         ;;
 esac
 
-apt update && apt -y full-upgrade && apt install -y git openjdk-17-jdk python3-pip screen sl unattended-upgrades unzip webp
+apt update && apt -y full-upgrade && apt install -y curl git openjdk-17-jdk python3-pip screen sl unattended-upgrades unzip webp
 
 read -r -p "Voulez-vous installer Docker ? [O/n] " response
 case "$response" in
