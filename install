@@ -1,52 +1,127 @@
-#!/bin/sh
-echo "\e[32mLancement de l'installation cela peut prendre un certain temps\e[0m"
-apt update && apt -y full-upgrade
-apt -y install apt-transport-https ca-certificates curl software-properties-common python3-pip git openjdk-17-jdk screen webp unattended-upgrades unzip nmap htop
-pip3 install docker-compose dynmap_timemachine
-curl -sSL https://get.docker.com | bash
-apt -y install docker-ce-cli containerd.io
-git clone https://www.github.com/baptiste313/baptecraft_install/
-mv baptecraft_install/.cf-ddns .
-chmod +x /root/.cf-ddns/cf-play.sh /root/.cf-ddns/cf-map.sh /root/.cf-ddns/cf-analytics.sh /root/.cf-ddns/cloudflare-ddns.sh
-echo "*/1 * * * * /bin/bash /root/.cf-ddns/cloudflare-ddns.sh" >> cloudflare-ddns
-crontab cloudflare-ddns
-curl -o kuma_install.sh http://git.kuma.pet/install.sh && sudo bash kuma_install.sh
-echo '#!/bin/bash' > /etc/rc.local
-echo "dhclient" >> /etc/rc.local
-echo "/home/minecraft/start.sh" >> /etc/rc.local
-echo "exit 0" >> /etc/rc.local
-systemctl enable rc-local
-systemctl restart rc-local
-echo "version: '3'
-services:
-  app:
-    image: 'jc21/nginx-proxy-manager:latest'
-    restart: unless-stopped
-    ports:
-      - '80:80'
-      - '81:81'
-      - '443:443'
-    volumes:
-      - ./root/.config/data:/data
-      - ./root/.config/letsencrypt:/etc/letsencrypt" > docker-compose.yml
-docker-compose up -d
-chmod -R 775 /root/.config/
-mkdir /home/minecraft
-cd /home/minecraft
-wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar https://raw.githubusercontent.com/baptiste313/baptecraft_install/main/start.sh https://www.dropbox.com/s/e4uwzvutlnijx72/baptecraft.zip
-unzip baptecraft.zip
-mv /home/minecraft/baptecraft/* /home/minecraft
-java -Xmx1024M -jar /home/minecraft/BuildTools.jar --rev 1.18
-java -Xms512M -Xmx1024M -jar /home/minecraft/spigot-1.18.jar nogui
-sed -i 's/false/true/g' /home/minecraft/eula.txt
-rm -rf /home/minecraft/baptecraft /root/kuma_install.sh /
-cp start.sh /home/pi
-cp start.sh /root
-chmod +x /root/start.sh /home/pi/start.sh /home/minecraft/start.sh /root/cloudflare-ddns
-secs=$((2 * 60))
-while [ $secs -gt 0 ]; do
-   echo -ne "\e[32mLe serveur redémarre automatiquement dans $secs\033[0K\r\e[0m"
-   sleep 1
-   : $((secs--))
-done
+#!/bin/bash
+
+echo "
+╔╗────────╔╗────────────╔═╗╔╗
+║║───────╔╝╚╗───────────║╔╬╝╚╗
+║╚═╦══╦══╬╗╔╬══╦══╦═╦══╦╝╚╬╗╔╝
+║╔╗║╔╗║╔╗║║║║║═╣╔═╣╔╣╔╗╠╗╔╝║║
+║╚╝║╔╗║╚╝║║╚╣║═╣╚═╣║║╔╗║║║─║╚╗
+╚══╩╝╚╣╔═╝╚═╩══╩══╩╝╚╝╚╝╚╝─╚═╝
+──────║║
+──────╚╝
+-- Bienvenue sur baptecraft --
+IP de l'hôte : $(hostname -I | awk '{print $1}')
+IP publique de l'hôte : $(curl -s https://checkip.hedouin.eu/ || curl -s https://checkip.amazonaws.com/)
+"
+
+read -r -p "L'installation va commencer, voulez-vous continuer ? (cela peut prendre un certain temps)... [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO])
+        ;;
+    *)
+        exit 0
+        ;;
+esac
+
+apt update && apt -y full-upgrade && apt install -y git openjdk-17-jdk python3-pip screen sl unattended-upgrades unzip webp
+
+read -r -p "Voulez-vous installer Docker ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        curl -sSL https://get.docker.com | bash
+        apt install -y containerd.io docker-ce-cli
+        echo "\n[\e[32m✓\e[0m] Installation réussie de Docker\n"
+        ;;
+esac
+
+read -r -p "Voulez-vous installer CrowdSec ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        curl -sSL https://packagecloud.io/install/repositories/crowdsec/crowdsec/script.deb.sh | bash
+        apt install -y crowdsec
+        echo "\n[\e[32m✓\e[0m] Installation réussie de CrowdSec\n"
+        ;;
+esac
+
+read -r -p "Voulez-vous installer Minecraft Dynmap Time Machine ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        pip3 install dynmap_timemachine
+        echo "\n[\e[32m✓\e[0m] Installation réussie de Minecraft Dynmap Time Machine\n"
+        ;;
+esac
+
+read -r -p "Voulez-vous installer Uptime Kuma ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        docker run -d --restart=always -p 3001:3001 louislam/uptime-kuma
+        echo "\n[\e[32m✓\e[0m] Installation réussie de Uptime Kuma\n"
+        ;;
+esac
+
+read -r -p "Voulez-vous installer Nginx Proxy Manager ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        docker run -d --restart=always -p 81:81 -p 80:80 -p 443:443 jc21/nginx-proxy-manager
+        echo "\n[\e[32m✓\e[0m] Installation réussie de Nginx Proxy Manager\n"
+        ;;
+esac
+
+read -r -p "Voulez-vous installer Minecraft ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        mkdir /home/minecraft && cd /home/minecraft
+        wget -q https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar https://gist.githubusercontent.com/baptiste313/32237df60b8ae0e018eacc741f0175e2/raw/d19efbf9f1606a746d64d25acb8d4242b646267a/start.sh https://www.dropbox.com/s/e4uwzvutlnijx72/baptecraft.zip
+        unzip baptecraft.zip
+        mv /home/minecraft/baptecraft/* /home/minecraft
+        java -Xmx1024M -jar /home/minecraft/BuildTools.jar --rev 1.18
+        java -Xms512M -Xmx1024M -jar /home/minecraft/spigot-1.18.jar nogui
+        sed -i 's/false/true/g' /home/minecraft/eula.txt
+        rm -rf /home/minecraft/baptecraft
+        cp start.sh /home/pi
+        cp start.sh /root
+        echo "\n[\e[32m✓\e[0m] Installation réussie de Minecraft\n"
+        ;;
+esac
+
+read -r -p "Voulez-vous installer Cloudflare Dynamic DNS IP Updater ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        cd
+        wget -qO .cloudflare.sh https://raw.githubusercontent.com/timetoexpire/cloudflare-ddns-updater/main/cloudflare-template.sh
+        chmod +x .cloudflare.sh
+        sed -i 's/auth_email=.*/auth_email="baptiste@hedouin.eu"/' .cloudflare.sh
+        sed -i 's/auth_key=.*/auth_key="GpY3J1UgF5gMdYQTwlTpd8nT2NSuBBlsSoUMmhJM"/' .cloudflare.sh
+        sed -i 's/zone_identifier=.*/zone_identifier="fb245cfaf3f43f14fda39ad2c94e2ae0"/' .cloudflare.sh
+        echo "*/1 * * * * /bin/bash ./root/.cloudflare.sh -record_name=map.baptecraft.ovh" > cloudflare
+        echo "*/1 * * * * /bin/bash ./root/.cloudflare.sh -record_name=play.baptecraft.ovh" >> cloudflare
+        echo "*/1 * * * * /bin/bash ./root/.cloudflare.sh -record_name=analytics.baptecraft.ovh" >> cloudflare
+        crontab cloudflare
+        echo "\n[\e[32m✓\e[0m] Installation réussie de Cloudflare Dynamic DNS IP Updater\n"
+        ;;
+esac
+
+read -r -p "Voulez-vous modifier /etc/rc.local ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        echo '#!/bin/bash' > /etc/rc.local
+        echo "dhclient" >> /etc/rc.local
+        echo "/root/start.sh" >> /etc/rc.local
+        echo "exit 0" >> /etc/rc.local
+        echo "\n[\e[32m✓\e[0m] Edition réussie de rc.local\n"
+        ;;
+esac
+
+read -r -p "L'installation est terminée, voulez-vous redémarrer maintenant ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        apt -y autoclean
+        i=60;while [ $i -gt 0 ];do if [ $i -gt 9 ];then printf "\b\b$i";else  printf "\b\b $i";fi;sleep 1;i=`expr $i - 1`;done
+        echo "\n"
+        ;;
+    *)
+        exit 0
+        ;;
+esac
+
 /sbin/reboot now
