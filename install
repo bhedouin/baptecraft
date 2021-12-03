@@ -23,7 +23,7 @@ case "$response" in
         ;;
 esac
 
-apt update && apt -y full-upgrade && apt install -y apt-transport-https dirmngr git gnupg1 openjdk-17-jdk python3-pip screen sl unattended-upgrades unzip webp && rpi-update
+apt update && apt -y full-upgrade && apt install -y apt-transport-https curl dirmngr git gnupg1 openjdk-17-jdk python3-pip screen sl unattended-upgrades unzip webp && rpi-update
 
 read -r -p "Voulez-vous installer Docker ? [O/n] " response
 case "$response" in
