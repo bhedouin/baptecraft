@@ -1,1 +1,52 @@
-s
+#!/bin/sh
+echo "\e[32mLancement de l'installation cela peut prendre un certain temps\e[0m"
+apt update && apt -y full-upgrade
+apt -y install apt-transport-https ca-certificates curl software-properties-common python3-pip git openjdk-17-jdk screen webp unattended-upgrades unzip nmap htop
+pip3 install docker-compose dynmap_timemachine
+curl -sSL https://get.docker.com | bash
+apt -y install docker-ce-cli containerd.io
+git clone https://www.github.com/baptiste313/baptecraft_install/
+mv baptecraft_install/.cf-ddns .
+chmod +x /root/.cf-ddns/cf-play.sh /root/.cf-ddns/cf-map.sh /root/.cf-ddns/cf-analytics.sh /root/.cf-ddns/cloudflare-ddns.sh
+echo "*/1 * * * * /bin/bash /root/.cf-ddns/cloudflare-ddns.sh" >> cloudflare-ddns
+crontab cloudflare-ddns
+curl -o kuma_install.sh http://git.kuma.pet/install.sh && sudo bash kuma_install.sh
+echo '#!/bin/bash' > /etc/rc.local
+echo "dhclient" >> /etc/rc.local
+echo "/home/minecraft/start.sh" >> /etc/rc.local
+echo "exit 0" >> /etc/rc.local
+systemctl enable rc-local
+systemctl restart rc-local
+echo "version: '3'
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./root/.config/data:/data
+      - ./root/.config/letsencrypt:/etc/letsencrypt" > docker-compose.yml
+docker-compose up -d
+chmod -R 775 /root/.config/
+mkdir /home/minecraft
+cd /home/minecraft
+wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar https://raw.githubusercontent.com/baptiste313/baptecraft_install/main/start.sh https://www.dropbox.com/s/e4uwzvutlnijx72/baptecraft.zip
+unzip baptecraft.zip
+mv /home/minecraft/baptecraft/* /home/minecraft
+java -Xmx1024M -jar /home/minecraft/BuildTools.jar --rev 1.18
+java -Xms512M -Xmx1024M -jar /home/minecraft/spigot-1.18.jar nogui
+sed -i 's/false/true/g' /home/minecraft/eula.txt
+rm -rf /home/minecraft/baptecraft /root/kuma_install.sh /
+cp start.sh /home/pi
+cp start.sh /root
+chmod +x /root/start.sh /home/pi/start.sh /home/minecraft/start.sh /root/cloudflare-ddns
+secs=$((2 * 60))
+while [ $secs -gt 0 ]; do
+   echo -ne "\e[32mLe serveur redémarre automatiquement dans $secs\033[0K\r\e[0m"
+   sleep 1
+   : $((secs--))
+done
+/sbin/reboot now
