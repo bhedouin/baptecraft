@@ -25,6 +25,7 @@ esac
 
 apt update && apt -y full-upgrade && apt install -y apt-transport-https curl dirmngr git gnupg1 ntp openjdk-17-jdk python3-pip screen sl unattended-upgrades unzip webp && rpi-update
 sed -i 's/debian/fr/g' /etc/ntp.conf
+dpkg-reconfigure locales
 
 read -r -p "Voulez-vous installer Docker ? [O/n] " response
 case "$response" in
