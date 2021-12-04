@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# wget -qO install.sh https://baptecraft.ovh/install && bash install.sh
+
 echo "
 ╔╗────────╔╗────────────╔═╗╔╗
 ║║───────╔╝╚╗───────────║╔╬╝╚╗
