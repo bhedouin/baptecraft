@@ -125,23 +125,6 @@ case "$response" in
         ;;
 esac
 
-read -r -p "Voulez-vous installer Cloudflare Dynamic DNS IP Updater ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        cd || exit
-        wget -qO .cloudflare.sh https://raw.githubusercontent.com/timetoexpire/cloudflare-ddns-updater/main/cloudflare-template.sh
-        chmod +x .cloudflare.sh
-        sed -i 's/auth_email=.*/auth_email="baptiste@hedouin.eu"/' .cloudflare.sh
-        sed -i 's/auth_key=.*/auth_key="GpY3J1UgF5gMdYQTwlTpd8nT2NSuBBlsSoUMmhJM"/' .cloudflare.sh
-        sed -i 's/zone_identifier=.*/zone_identifier="fb245cfaf3f43f14fda39ad2c94e2ae0"/' .cloudflare.sh
-        echo "*/1 * * * * /bin/bash ./root/.cloudflare.sh -record_name=map.baptecraft.ovh" > cloudflare
-        echo "*/1 * * * * /bin/bash ./root/.cloudflare.sh -record_name=play.baptecraft.ovh" >> cloudflare
-        echo "*/1 * * * * /bin/bash ./root/.cloudflare.sh -record_name=analytics.baptecraft.ovh" >> cloudflare
-        crontab cloudflare
-        printf "\n[\e[32m✓\e[0m] Installation réussie de Cloudflare Dynamic DNS IP Updater\n"
-        ;;
-esac
-
 read -r -p "Voulez-vous modifier /etc/rc.local ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
