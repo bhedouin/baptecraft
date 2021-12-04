@@ -16,6 +16,8 @@ IP de l'hôte : $(hostname -I | awk '{print $1}')
 IP publique de l'hôte : $(curl -s https://checkip.hedouin.eu/ || curl -s https://checkip.amazonaws.com/)
 "
 
+if [[ $(id -u) -ne 0 ]] ; then echo "Veuillez exécuter en tant que sudo" ; exit 1 ; fi
+
 read -r -p "L'installation va commencer, voulez-vous continuer ? (cela peut prendre un certain temps)... [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO])
@@ -164,11 +166,35 @@ case "$response" in
         ;;
 esac
 
+read -r -p "Voulez-vous modifier /etc/hostname ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        sed -i 's/raspberrypi/baptecraft/g' /etc/hostname
+        printf "\n[\e[32m✓\e[0m] Edition réussie de hostname\n"
+        ;;
+esac
+
+read -r -p "Voulez-vous modifier /etc/hosts ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        sed -i 's/raspberrypi/baptecraft/g' /etc/hosts
+        printf "\n[\e[32m✓\e[0m] Edition réussie de hosts\n"
+        ;;
+esac
+
 read -r -p "Voulez-vous modifier /etc/ntp.conf ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
         sed -i 's/debian/fr/g' /etc/ntp.conf
         printf "\n[\e[32m✓\e[0m] Edition réussie de ntp.conf\n"
+        ;;
+esac
+
+read -r -p "Voulez-vous modifier /etc/ssh/sshd_config ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+        printf "\n[\e[32m✓\e[0m] Edition réussie de ssh\n"
         ;;
 esac
 
