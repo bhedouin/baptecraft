@@ -9,7 +9,7 @@ echo "
 ╚══╩╝╚╣╔═╝╚═╩══╩══╩╝╚╝╚╝╚╝─╚═╝
 ──────║║
 ──────╚╝
--- Bienvenue sur baptecraft --
+— Bienvenue dans l'installateur de baptecraft —
 IP de l'hôte : $(hostname -I | awk '{print $1}')
 IP publique de l'hôte : $(curl -s https://checkip.hedouin.eu/ || curl -s https://checkip.amazonaws.com/)
 "
