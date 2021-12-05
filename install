@@ -1,7 +1,5 @@
 #!/bin/bash
-
 # wget -qO install.sh https://baptecraft.ovh/install && bash install.sh
-
 echo "
 ╔╗────────╔╗────────────╔═╗╔╗
 ║║───────╔╝╚╗───────────║╔╬╝╚╗
@@ -11,14 +9,13 @@ echo "
 ╚══╩╝╚╣╔═╝╚═╩══╩══╩╝╚╝╚╝╚╝─╚═╝
 ──────║║
 ──────╚╝
-— Bienvenue dans l'installateur de baptecraft —
-IP de l'hôte : $(hostname -I | awk '{print $1}')
-IP publique de l'hôte : $(curl -s https://checkip.hedouin.eu/ || curl -s https://checkip.amazonaws.com/)
+— Voici l'installateur de baptecraft —
+IP de la passerelle réseau : $(tput setaf 3)$(route -n | awk '$4 == "UG" {print $2}')$(tput sgr 0)
+IP de l'hôte : $(tput setaf 3)$(hostname -I | awk '{print $1}')$(tput sgr 0)
+IP publique de l'hôte : $(tput setaf 3)$(curl -s https://checkip.hedouin.eu/ || curl -s https://checkip.amazonaws.com/)$(tput sgr 0)
 "
-
-if [[ $(id -u) -ne 0 ]] ; then echo "Veuillez exécuter en tant que sudo" ; exit 1 ; fi
-
-read -r -p "L'installation va commencer, voulez-vous continuer ? (cela peut prendre un certain temps)... [O/n] " response
+if [[ $(id -u) -ne 0 ]] ; then echo "Veuillez exécuter en tant qu'utilisateur root" ; exit 1 ; fi
+read -r -p "L'installation est sur le point de commencer, voulez-vous continuer ? (cela peut prendre un certain temps)... [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO])
         ;;
@@ -26,178 +23,121 @@ case "$response" in
         exit 0
         ;;
 esac
-
-#apt update && apt -y full-upgrade && apt install -y apt-transport-https curl dirmngr git gnupg1 ntp openjdk-17-jdk python3-pip screen sl unattended-upgrades unzip webp
-
-read -r -p "Voulez-vous mettre à jour le fimware ? [O/n] " response
+case "$(curl -s --max-time 2 -I https://www.google.fr/ | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
+  [23]) echo "\n[$(tput setaf 2)✓$(tput sgr 0)] L'accès à l'internet fonctionne\n";;
+  5) echo "\n[$(tput setaf 1)X$(tput sgr 0)] Le proxy web ne nous laisse pas passer\n";;
+  *) echo "\n[$(tput setaf 1)X$(tput sgr 0)] Le réseau est en panne ou très lent\n";;
+esac
+apt update && apt -y full-upgrade && apt install -y curl git openjdk-17-jdk python3-pip screen ufw unattended-upgrades unzip webp && pip3 install -q gdown dynmap_timemachine
+read -r -p "Voulez-vous installer Cloudflare Dynamic DNS IP Updater ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
-        rpi-update
+        cd || exit
+        wget -qO cloudflare.sh https://raw.githubusercontent.com/K0p1-Git/cloudflare-ddns-updater/main/cloudflare-template.sh
+        chmod +x cloudflare.sh
+        sed -i 's/auth_email=.*/auth_email="baptiste@hedouin.eu"/' cloudflare.sh
+        sed -i 's/auth_key=.*/auth_key="Lx8c-k69oRRD1RIQbdeb_Dh7QNk69YPxkLqLL0Qk"/' cloudflare.sh
+        sed -i 's/zone_identifier=.*/zone_identifier="840e558afd704b7ac3371a359e456e7e"/' cloudflare.sh
+        mkdir /root/.cf-ddns && cd /root/.cf-ddns || exit
+        cp /root/cloudflare.sh /root/.cf-ddns/cf-map.sh
+        cp /root/cloudflare.sh /root/.cf-ddns/cf-play.sh
+        cp /root/cloudflare.sh /root/.cf-ddns/cf-analytics.sh
+        sed -i 's/record_name=.*/record_name="map.baptecraft.ovh"/' /root/.cf-ddns/cf-map.sh
+        sed -i 's/record_name=.*/record_name="play.baptecraft.ovh"/' /root/.cf-ddns/cf-play.sh
+        sed -i 's/record_name=.*/record_name="analytics.baptecraft.ovh"/' /root/.cf-ddns/cf-analytics.sh
+        echo "*/1 * * * * /bin/bash bash /root/.cf-ddns/cf-map.sh" > /root/cloudflare
+        echo "*/1 * * * * /bin/bash bash /root/.cf-ddns/cf-play.sh" >> /root/cloudflare
+        echo "*/1 * * * * /bin/bash bash /root/.cf-ddns/cf-analytics.sh" >> /root/cloudflare
+        crontab cloudflare
+        rm /root/cloudflare.sh /root/cloudflare
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Cloudflare Dynamic DNS IP Updater\n"
         ;;
 esac
-
-read -r -p "Voulez-vous installer Docker ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        curl -sSL https://get.docker.com | bash
-        apt install -y containerd.io docker-ce-cli
-        printf "\n[\e[32m✓\e[0m] Installation réussie de Docker\n"
-        ;;
-esac
-
 read -r -p "Voulez-vous installer CrowdSec ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
         curl -sSL https://packagecloud.io/install/repositories/crowdsec/crowdsec/script.deb.sh | bash
         apt install -y crowdsec
-        printf "\n[\e[32m✓\e[0m] Installation réussie de CrowdSec\n"
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de CrowdSec\n"
         ;;
 esac
-
+read -r -p "Voulez-vous installer Docker ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        curl -sSL https://get.docker.com | bash
+        apt install -y containerd.io docker-ce-cli
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Docker\n"
+        ;;
+esac
+read -r -p "Voulez-vous installer Impostor ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        docker run -d --restart=always -p 22023:22023/udp aeonlucid/impostor:latest
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Impostor\n"
+        ufw allow 22023 2> /dev/null
+        printf "— $(tput setaf 3)https://baptecraft.ovh/baptus/\n$(tput sgr 0)"
+        ;;
+esac
+read -r -p "Voulez-vous installer Minecraft ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        mkdir /home/minecraft && cd /home/minecraft || exit
+        wget -q https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar https://gist.githubusercontent.com/baptiste313/32237df60b8ae0e018eacc741f0175e2/raw/d19efbf9f1606a746d64d25acb8d4242b646267a/start.sh
+        gdown -g https://drive.google.com/file/d/1EPJiNZqa0whfJrJOrMz3_QiL-MxWMDFm/view?usp=sharing
+        unzip -qq baptecraft.zip
+        mv /home/minecraft/baptecraft/* /home/minecraft
+        sed -i "s/network-compression-threshold=256/network-compression-threshold=512/g" server.properties
+        sed -i "s/spawn-protection=16/spawn-protection=0/g" server.properties
+        sed -i "s/snooper-enabled=true/snooper-enabled=false/g" server.properties
+        sed -i "s/max-tick-time=60000/max-tick-time=120000/g" server.properties
+        java -Xmx1024M -jar /home/minecraft/BuildTools.jar --rev 1.18
+        java -Xms512M -Xmx1024M -jar /home/minecraft/spigot-1.18.jar nogui
+        sed -i 's/false/true/g' /home/minecraft/eula.txt
+        rm -rf /home/minecraft/baptecraft
+        chmod +x start.sh
+        cp start.sh /home/pi
+        cp start.sh /root
+        wget -qP plugins/ https://dynmap.us/builds/dynmap/Dynmap-3.3-SNAPSHOT-spigot.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsX-2.19.1-dev+52-41861a8.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXChat-2.19.1-dev+52-41861a8.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXSpawn-2.19.1-dev+52-41861a8.jar https://download.discordsrv.com/snapshot https://github.com/plan-player-analytics/Plan/releases/download/5.4.1516/Plan-5.4-build-1516.jar https://cdn.discordapp.com/attachments/804019242512810034/916652709267009606/TreeAssist.jar https://github.com/PlaceholderAPI/PlaceholderAPI/releases/download/2.10.10/PlaceholderAPI-2.10.10.jar https://github.com/griefergames/PlugMan/releases/download/3.0.0/PlugMan.jar https://media.forgecdn.net/files/3462/546/Multiverse-Core-4.3.1.jar
+        ufw allow 25565 2> /dev/null
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Minecraft\n"
+        ;;
+esac
+read -r -p "Voulez-vous installer Nginx Proxy Manager ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        docker run -d --restart=always -p 81:81 -p 80:80 -p 443:443 jc21/nginx-proxy-manager:latest
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Nginx Proxy Manager\n"
+        ufw allow 80 2> /dev/null
+        ufw allow 443 2> /dev/null
+        printf "— $(tput setaf 3)http://%s$(hostname -I | awk '{print $1}'):81\n$(tput sgr 0)"
+        ;;
+esac
 read -r -p "Voulez-vous installer Speedtest CLI ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
         curl -sSL https://packagecloud.io/ookla/speedtest-cli/gpgkey | gpg --dearmor | sudo tee /usr/share/keyrings/speedtestcli-archive-keyring.gpg >/dev/null
         echo "deb [signed-by=/usr/share/keyrings/speedtestcli-archive-keyring.gpg] https://packagecloud.io/ookla/speedtest-cli/debian/ $(lsb_release -cs) main" | sudo tee  /etc/apt/sources.list.d/speedtest.list
         apt update && apt install -y speedtest
-        printf "\n[\e[32m✓\e[0m] Installation réussie de Speedtest CLI\n"
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Speedtest CLI\n"
         ;;
 esac
-
-read -r -p "Voulez-vous installer Minecraft Dynmap Time Machine ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        pip3 install dynmap_timemachine
-        printf "\n[\e[32m✓\e[0m] Installation réussie de Minecraft Dynmap Time Machine\n"
-        ;;
-esac
-
-read -r -p "Voulez-vous installer Docker Compose ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        pip3 install docker-compose
-        printf "\n[\e[32m✓\e[0m] Installation réussie de Docker Compose\n"
-        ;;
-esac
-
 read -r -p "Voulez-vous installer Uptime Kuma ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
         docker run -d --restart=always -p 3001:3001 louislam/uptime-kuma:latest
-        printf "\n[\e[32m✓\e[0m] Installation réussie de Uptime Kuma\n"
-        printf "— http://%s$(hostname -I | awk '{print $1}'):3001\n"
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Uptime Kuma\n"
+        ufw allow 3001 2> /dev/null
+        printf "— $(tput setaf 3)http://%s$(hostname -I | awk '{print $1}'):3001\n$(tput sgr 0)"
         ;;
 esac
-
-read -r -p "Voulez-vous installer Nginx Proxy Manager ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        docker run -d --restart=always -p 81:81 -p 80:80 -p 443:443 jc21/nginx-proxy-manager:latest
-        printf "\n[\e[32m✓\e[0m] Installation réussie de Nginx Proxy Manager\n"
-        printf "— http://%s$(hostname -I | awk '{print $1}'):81\n"
-        ;;
-esac
-
-read -r -p "Voulez-vous installer Pi-hole ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        docker run -d --restart=always -p 53:53/tcp -p 53:53/udp -p 67:67/udp -p 8888:8888/tcp pihole/pihole:latest
-        printf "\n[\e[32m✓\e[0m] Installation réussie de Pi-hole\n"
-        printf "— http://%s$(hostname -I | awk '{print $1}'):8888\n"
-        ;;
-esac
-
-read -r -p "Voulez-vous installer Impostor ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        docker run -d --restart=always -p 22023:22023/udp aeonlucid/impostor:latest
-        printf "\n[\e[32m✓\e[0m] Installation réussie de Impostor\n"
-        printf "— https://baptecraft.ovh/baptus/\n"
-        ;;
-esac
-
 read -r -p "Voulez-vous installer zRam ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
-        git clone https://github.com/foundObjects/zram-swap && cd zram-swap || exit
+        git clone -q https://github.com/foundObjects/zram-swap && cd zram-swap || exit
         ./install.sh
-        printf "\n[\e[32m✓\e[0m] Installation réussie de zram\n"
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de zRam\n"
         ;;
 esac
-
-read -r -p "Voulez-vous installer Minecraft ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        mkdir /home/minecraft && cd /home/minecraft || exit
-        wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar https://gist.githubusercontent.com/baptiste313/32237df60b8ae0e018eacc741f0175e2/raw/d19efbf9f1606a746d64d25acb8d4242b646267a/start.sh https://www.dropbox.com/s/e4uwzvutlnijx72/baptecraft.zip
-        unzip baptecraft.zip
-        mv /home/minecraft/baptecraft/* /home/minecraft
-        java -Xmx1024M -jar /home/minecraft/BuildTools.jar --rev 1.18
-        java -Xms512M -Xmx1024M -jar /home/minecraft/spigot-1.18.jar nogui
-        sed -i 's/false/true/g' /home/minecraft/eula.txt
-        rm -rf /home/minecraft/baptecraft
-        cp start.sh /home/pi
-        cp start.sh /root
-        printf "\n[\e[32m✓\e[0m] Installation réussie de Minecraft\n"
-        ;;
-esac
-
-read -r -p "Voulez-vous modifier /etc/rc.local ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        echo '#!/bin/bash' > /etc/rc.local
-        echo "dhclient" >> /etc/rc.local
-        #echo "/root/start.sh" >> /etc/rc.local
-        echo "exit 0" >> /etc/rc.local
-        printf "\n[\e[32m✓\e[0m] Edition réussie de rc.local\n"
-        ;;
-esac
-
-read -r -p "Voulez-vous modifier /etc/dhcpcd.conf ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        sed -i 's/#interface/interface/g' /etc/dhcpcd.conf
-        sed -i 's/#static ip_address/static ip_address/g' /etc/dhcpcd.conf
-        sed -i 's/#static ip6_address/static ip6_address/g' /etc/dhcpcd.conf
-        sed -i 's/#static routers=/static routers=/g' /etc/dhcpcd.conf
-        sed -i 's/#static domain_name_servers/static domain_name_servers/g' /etc/dhcpcd.conf
-        sed -i 's/static domain_name_servers=.*/static domain_name_servers=80.67.169.12 80.67.169.40 2001:910:800::12 2001:910:800::40/' /etc/dhcpcd.conf
-        printf "\n[\e[32m✓\e[0m] Edition réussie de dhcpcd.conf\n"
-        ;;
-esac
-
-read -r -p "Voulez-vous modifier /etc/hostname ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        sed -i 's/raspberrypi/baptecraft/g' /etc/hostname
-        printf "\n[\e[32m✓\e[0m] Edition réussie de hostname\n"
-        ;;
-esac
-
-read -r -p "Voulez-vous modifier /etc/hosts ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        sed -i 's/raspberrypi/baptecraft/g' /etc/hosts
-        printf "\n[\e[32m✓\e[0m] Edition réussie de hosts\n"
-        ;;
-esac
-
-read -r -p "Voulez-vous modifier /etc/ntp.conf ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        sed -i 's/debian/fr/g' /etc/ntp.conf
-        printf "\n[\e[32m✓\e[0m] Edition réussie de ntp.conf\n"
-        ;;
-esac
-
-read -r -p "Voulez-vous modifier /etc/ssh/sshd_config ? [O/n] " response
-case "$response" in
-    [oO][eE][sS]|[oO]) 
-        sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
-        printf "\n[\e[32m✓\e[0m] Edition réussie de ssh\n"
-        ;;
-esac
-
 read -r -p "Voulez-vous modifier /boot/config.txt ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
@@ -207,19 +147,24 @@ case "$response" in
         sed -i 's/arm_freq=.*/arm_freq=2147/' /boot/config.txt
         sed -i 's/over_voltage=.*/over_voltage=6/' /boot/config.txt
         sed -i 's/gpu_freq=.*/gpu_freq=750/' /boot/config.txt
-        printf "\n[\e[32m✓\e[0m] Edition réussie de config.txt\n"
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Edition réussie de config.txt\n"
         ;;
 esac
-
-read -r -p "Voulez-vous changer la langue du système ? [O/n] " response
+read -r -p "Voulez-vous modifier /etc/ssh/sshd_config ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
-        dpkg-reconfigure locales
-        printf "\n[\e[32m✓\e[0m] Le changement de langue du système est terminé\n"
+        sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Edition réussie de ssh\n"
         ;;
 esac
-
-read -r -p "L'installation est terminée, voulez-vous redémarrer maintenant ? [O/n] " response
+read -r -p "Voulez-vous changer la langue en français ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        update-locale LANG=fr_FR.UTF-8
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Le changement de langue est terminé\n"
+        ;;
+esac
+read -r -p "La configuration est terminée, voulez-vous redémarrer maintenant ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
         apt -y autoclean && apt -y autoremove
@@ -230,5 +175,4 @@ case "$response" in
         exit 0
         ;;
 esac
-
 /sbin/reboot now
