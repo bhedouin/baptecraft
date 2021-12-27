@@ -13,6 +13,7 @@ echo "
 IP de la passerelle réseau : $(tput setaf 3)$(route -n | awk '$4 == "UG" {print $2}')$(tput sgr 0)
 IP de l'hôte : $(tput setaf 3)$(hostname -I | awk '{print $1}')$(tput sgr 0)
 IP publique de l'hôte : $(tput setaf 3)$(curl -s https://checkip.hedouin.eu/ || curl -s https://checkip.amazonaws.com/)$(tput sgr 0)
+Nom de code de la version : $(tput setaf 3)$(lsb_release -sc)$(tput sgr 0)
 "
 if [[ $(id -u) -ne 0 ]] ; then echo "Veuillez exécuter en tant qu'utilisateur root" ; exit 1 ; fi
 read -r -p "L'installation est sur le point de commencer, voulez-vous continuer ? (cela peut prendre un certain temps)... [O/n] " response
@@ -28,7 +29,8 @@ case "$(curl -s --max-time 2 -I https://www.google.fr/ | sed 's/^[^ ]*  *\([0-9]
   5) echo "\n[$(tput setaf 1)X$(tput sgr 0)] Le proxy web ne nous laisse pas passer\n";;
   *) echo "\n[$(tput setaf 1)X$(tput sgr 0)] Le réseau est en panne ou très lent\n";;
 esac
-apt update && apt -y full-upgrade && apt install -y curl git openjdk-17-jdk python3-pip screen ufw unattended-upgrades unzip webp && pip3 install -q gdown dynmap_timemachine
+sed -i 's/deb.debian.org/debian.proxad.net/' /etc/apt/sources.list
+apt update && apt -y full-upgrade && apt install -y curl git megatools nmap openjdk-17-jdk python3-pip screen ufw unattended-upgrades unzip webp && pip3 install -q gdown dynmap_timemachine pwncat-cs yt-dlp
 read -r -p "Voulez-vous installer Cloudflare Dynamic DNS IP Updater ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
@@ -53,6 +55,16 @@ case "$response" in
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Cloudflare Dynamic DNS IP Updater\n"
         ;;
 esac
+read -r -p "Voulez-vous installer OpenVPN ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        cd || exit
+        wget -q https://raw.githubusercontent.com/Nyr/openvpn-install/master/openvpn-install.sh
+        chmod +x openvpn-install.sh
+        bash openvpn-install.sh
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de OpenVPN\n"
+        ;;
+esac
 read -r -p "Voulez-vous installer CrowdSec ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
@@ -72,7 +84,7 @@ esac
 read -r -p "Voulez-vous installer Impostor ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
-        docker run -d --restart=always -p 22023:22023/udp aeonlucid/impostor:latest
+        docker run -d --restart=always -p 22023:22023/udp -e PUID=$(id -u) -e PGID=$(id -u) aeonlucid/impostor:latest
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Impostor\n"
         ufw allow 22023 2> /dev/null
         printf "— $(tput setaf 3)https://baptecraft.ovh/baptus/\n$(tput sgr 0)"
@@ -99,13 +111,14 @@ case "$response" in
         cp start.sh /root
         wget -qP plugins/ https://dynmap.us/builds/dynmap/Dynmap-3.3-SNAPSHOT-spigot.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsX-2.19.1-dev+52-41861a8.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXChat-2.19.1-dev+52-41861a8.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXSpawn-2.19.1-dev+52-41861a8.jar https://download.discordsrv.com/snapshot https://github.com/plan-player-analytics/Plan/releases/download/5.4.1516/Plan-5.4-build-1516.jar https://cdn.discordapp.com/attachments/804019242512810034/916652709267009606/TreeAssist.jar https://github.com/PlaceholderAPI/PlaceholderAPI/releases/download/2.10.10/PlaceholderAPI-2.10.10.jar https://github.com/griefergames/PlugMan/releases/download/3.0.0/PlugMan.jar https://media.forgecdn.net/files/3462/546/Multiverse-Core-4.3.1.jar
         ufw allow 25565 2> /dev/null
+        echo -e "127.0.0.1\tbstats.org" >> /etc/hosts
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Minecraft\n"
         ;;
 esac
 read -r -p "Voulez-vous installer Nginx Proxy Manager ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
-        docker run -d --restart=always -p 81:81 -p 80:80 -p 443:443 jc21/nginx-proxy-manager:latest
+        docker run -d --restart=always -p 81:81 -p 80:80 -p 443:443 -e PUID=$(id -u) -e PGID=$(id -u) jc21/nginx-proxy-manager:latest
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Nginx Proxy Manager\n"
         ufw allow 80 2> /dev/null
         ufw allow 443 2> /dev/null
@@ -124,7 +137,7 @@ esac
 read -r -p "Voulez-vous installer Uptime Kuma ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
-        docker run -d --restart=always -p 3001:3001 louislam/uptime-kuma:latest
+        docker run -d --restart=always -p 3001:3001 -e PUID=$(id -u) -e PGID=$(id -u) louislam/uptime-kuma:latest
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Uptime Kuma\n"
         ufw allow 3001 2> /dev/null
         printf "— $(tput setaf 3)http://%s$(hostname -I | awk '{print $1}'):3001\n$(tput sgr 0)"
