@@ -25,9 +25,9 @@ case "$response" in
         ;;
 esac
 case "$(curl -s --max-time 2 -I https://www.google.fr/ | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
-  [23]) echo "\n[$(tput setaf 2)✓$(tput sgr 0)] L'accès à l'internet fonctionne\n";;
-  5) echo "\n[$(tput setaf 1)X$(tput sgr 0)] Le proxy web ne nous laisse pas passer\n";;
-  *) echo "\n[$(tput setaf 1)X$(tput sgr 0)] Le réseau est en panne ou très lent\n";;
+  [23]) printf "\n[$(tput setaf 2)✓$(tput sgr 0)] L'accès à l'internet fonctionne\n";;
+  5) printf "\n[$(tput setaf 1)X$(tput sgr 0)] Le proxy web ne nous laisse pas passer\n";;
+  *) printf "\n[$(tput setaf 1)X$(tput sgr 0)] Le réseau est en panne ou très lent\n";;
 esac
 sed -i 's/deb.debian.org/debian.proxad.net/' /etc/apt/sources.list
 apt update && apt -y full-upgrade && apt install -y curl git megatools nmap openjdk-17-jdk python3-pip screen ufw unattended-upgrades unzip webp && pip3 install -q gdown dynmap_timemachine pwncat-cs yt-dlp
@@ -59,16 +59,14 @@ read -r -p "Voulez-vous installer OpenVPN ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
         cd || exit
-        wget -q https://raw.githubusercontent.com/Nyr/openvpn-install/master/openvpn-install.sh
-        chmod +x openvpn-install.sh
-        bash openvpn-install.sh
+        wget -qO openvpn-install.sh https://raw.githubusercontent.com/Nyr/openvpn-install/master/openvpn-install.sh && bash openvpn-install.sh
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de OpenVPN\n"
         ;;
 esac
 read -r -p "Voulez-vous installer CrowdSec ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
-        curl -sSL https://packagecloud.io/install/repositories/crowdsec/crowdsec/script.deb.sh | bash
+        wget -qO crowdsec-install.sh https://packagecloud.io/install/repositories/crowdsec/crowdsec/script.deb.sh && bash crowdsec-install.sh > /dev/null 2>&1
         apt install -y crowdsec
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de CrowdSec\n"
         ;;
@@ -76,7 +74,7 @@ esac
 read -r -p "Voulez-vous installer Docker ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
-        curl -sSL https://get.docker.com | bash
+        wget -qO docker-install.sh https://raw.githubusercontent.com/docker/docker-install/master/install.sh && bash docker-install.sh
         apt install -y containerd.io docker-ce-cli
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Docker\n"
         ;;
@@ -111,6 +109,9 @@ case "$response" in
         cp start.sh /root
         wget -qP plugins/ https://dynmap.us/builds/dynmap/Dynmap-3.3-SNAPSHOT-spigot.jar https://download.discordsrv.com/snapshot https://github.com/plan-player-analytics/Plan/releases/download/5.4.1516/Plan-5.4-build-1516.jar https://cdn.discordapp.com/attachments/804019242512810034/916652709267009606/TreeAssist.jar https://github.com/griefergames/PlugMan/releases/download/3.0.0/PlugMan.jar https://media.forgecdn.net/files/3462/546/Multiverse-Core-4.3.1.jar https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/lastSuccessfulBuild/artifact/bootstrap/spigot/target/Geyser-Spigot.jar https://ci.extendedclip.com/job/PlaceholderAPI/lastSuccessfulBuild/artifact/build/libs/PlaceholderAPI-2.11.2-DEV-148.jar https://ci.codemc.io/view/Author/job/pop4959/job/Chunky/lastSuccessfulBuild/artifact/bukkit/build/libs/Chunky-1.2.165.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsX-2.19.3-dev+6-739600e.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXChat-2.19.3-dev+6-739600e.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXSpawn-2.19.3-dev+6-739600e.jar        ufw allow 25565 2> /dev/null
         echo -e "127.0.0.1\tbstats.org" >> /etc/hosts
+        ufw allow 25565 2> /dev/null
+        ufw allow 19132 2> /dev/null
+        ufw allow 24454 2> /dev/null
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Minecraft\n"
         ;;
 esac
@@ -122,6 +123,17 @@ case "$response" in
         ufw allow 80 2> /dev/null
         ufw allow 443 2> /dev/null
         printf "— $(tput setaf 3)http://%s$(hostname -I | awk '{print $1}'):81\n$(tput sgr 0)"
+        ;;
+esac
+read -r -p "Do you want to install the Portainer? [Y/n] " response
+case "$response" in
+    [yY][eE][sS]|[yY]) 
+        echo Which port would you like to use for Portainer?
+        read PORTAINER_PORT
+        docker volume create portainer_data
+        docker run -d -p $PORTAINER_PORT:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Successful installation of Portainer\n"
+        printf "— $(tput setaf 3)http://%s$(hostname -I | awk '{print $1}'):$PORTAINER_PORT\n$(tput sgr 0)"
         ;;
 esac
 read -r -p "Voulez-vous installer Speedtest CLI ? [O/n] " response
