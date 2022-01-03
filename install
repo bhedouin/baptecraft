@@ -24,7 +24,7 @@ case "$response" in
         exit 0
         ;;
 esac
-case "$(curl -s --max-time 2 -I https://www.google.fr/ | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
+case "$(curl -s --max-time 2 -I https://baptecraft.ovh/ | sed 's/^[^ ]*  *\([0-9]\).*/\1/; 1q')" in
   [23]) printf "\n[$(tput setaf 2)✓$(tput sgr 0)] L'accès à l'internet fonctionne\n";;
   5) printf "\n[$(tput setaf 1)X$(tput sgr 0)] Le proxy web ne nous laisse pas passer\n";;
   *) printf "\n[$(tput setaf 1)X$(tput sgr 0)] Le réseau est en panne ou très lent\n";;
@@ -100,14 +100,14 @@ case "$response" in
         sed -i "s/spawn-protection=16/spawn-protection=0/g" server.properties
         sed -i "s/snooper-enabled=true/snooper-enabled=false/g" server.properties
         sed -i "s/max-tick-time=60000/max-tick-time=120000/g" server.properties
-        java -Xmx1024M -jar /home/minecraft/BuildTools.jar --rev 1.18
+        java -Xmx1024M -jar /home/minecraft/BuildTools.jar --rev latest
         java -Xms512M -Xmx1024M -jar /home/minecraft/spigot-1.18.jar nogui
         sed -i 's/false/true/g' /home/minecraft/eula.txt
         rm -rf /home/minecraft/baptecraft
         chmod +x start.sh
         cp start.sh /home/pi
         cp start.sh /root
-        wget -qP plugins/ https://dynmap.us/builds/dynmap/Dynmap-3.3-SNAPSHOT-spigot.jar https://download.discordsrv.com/snapshot https://github.com/plan-player-analytics/Plan/releases/download/5.4.1516/Plan-5.4-build-1516.jar https://cdn.discordapp.com/attachments/804019242512810034/916652709267009606/TreeAssist.jar https://github.com/griefergames/PlugMan/releases/download/3.0.0/PlugMan.jar https://media.forgecdn.net/files/3462/546/Multiverse-Core-4.3.1.jar https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/lastSuccessfulBuild/artifact/bootstrap/spigot/target/Geyser-Spigot.jar https://ci.extendedclip.com/job/PlaceholderAPI/lastSuccessfulBuild/artifact/build/libs/PlaceholderAPI-2.11.2-DEV-148.jar https://ci.codemc.io/view/Author/job/pop4959/job/Chunky/lastSuccessfulBuild/artifact/bukkit/build/libs/Chunky-1.2.165.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsX-2.19.3-dev+6-739600e.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXChat-2.19.3-dev+6-739600e.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXSpawn-2.19.3-dev+6-739600e.jar        ufw allow 25565 2> /dev/null
+        wget -qP plugins/ https://dynmap.us/builds/dynmap/Dynmap-3.3-SNAPSHOT-spigot.jar $(curl -s https://api.github.com/repos/DiscordSRV/DiscordSRV/latest | jq --raw-output '.assets[0] | .browser_download_url') $(curl -s https://api.github.com/repos/plan-player-analytics/Plan/latest | jq --raw-output '.assets[0] | .browser_download_url') https://cdn.discordapp.com/attachments/804019242512810034/916652709267009606/TreeAssist.jar $(curl -s https://api.github.com/repos/griefergames/PlugMan/latest | jq --raw-output '.assets[0] | .browser_download_url') https://media.forgecdn.net/files/3462/546/Multiverse-Core-4.3.1.jar https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/lastSuccessfulBuild/artifact/bootstrap/spigot/target/Geyser-Spigot.jar https://ci.extendedclip.com/job/PlaceholderAPI/lastSuccessfulBuild/artifact/build/libs/PlaceholderAPI-2.11.2-DEV-148.jar https://ci.codemc.io/view/Author/job/pop4959/job/Chunky/lastSuccessfulBuild/artifact/bukkit/build/libs/Chunky-1.2.165.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsX-2.19.3-dev+6-739600e.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXChat-2.19.3-dev+6-739600e.jar https://ci.ender.zone/job/EssentialsX/lastSuccessfulBuild/artifact/jars/EssentialsXSpawn-2.19.3-dev+6-739600e.jar
         echo -e "127.0.0.1\tbstats.org" >> /etc/hosts
         ufw allow 25565 2> /dev/null
         ufw allow 19132 2> /dev/null
@@ -125,14 +125,14 @@ case "$response" in
         printf "— $(tput setaf 3)http://%s$(hostname -I | awk '{print $1}'):81\n$(tput sgr 0)"
         ;;
 esac
-read -r -p "Do you want to install the Portainer? [Y/n] " response
+read -r -p "Do you want to install the Portainer? [O/n] " response
 case "$response" in
-    [yY][eE][sS]|[yY]) 
-        echo Which port would you like to use for Portainer?
+    [oO][eE][sS]|[oO]) 
+        printf "Quel port souhaitez-vous utiliser pour Portainer ?"
         read PORTAINER_PORT
         docker volume create portainer_data
         docker run -d -p $PORTAINER_PORT:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
-        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Successful installation of Portainer\n"
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Portainer\n"
         printf "— $(tput setaf 3)http://%s$(hostname -I | awk '{print $1}'):$PORTAINER_PORT\n$(tput sgr 0)"
         ;;
 esac
