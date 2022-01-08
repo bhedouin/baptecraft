@@ -1,5 +1,6 @@
 #!/bin/bash
 # bash <(wget -qO- https://baptecraft.ovh/install)
+clear
 echo "
 ╔╗────────╔╗────────────╔═╗╔╗
 ║║───────╔╝╚╗───────────║╔╬╝╚╗
@@ -75,7 +76,8 @@ read -r -p "Voulez-vous installer Docker ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
         wget -qO docker-install.sh https://raw.githubusercontent.com/docker/docker-install/master/install.sh && bash docker-install.sh
-        apt install -y containerd.io docker-ce-cli
+        apt install -y -qq --no-install-recommends docker-ce-cli docker-ce >/dev/null
+        apt install -y -qq docker-ce-rootless-extras >/dev/null
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Docker\n"
         ;;
 esac
