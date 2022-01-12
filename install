@@ -30,7 +30,12 @@ case "$(curl -s --max-time 2 -I https://baptecraft.ovh/ | sed 's/^[^ ]*  *\([0-9
   5) printf "\n[$(tput setaf 1)X$(tput sgr 0)] Le proxy web ne nous laisse pas passer\n";;
   *) printf "\n[$(tput setaf 1)X$(tput sgr 0)] Le réseau est en panne ou très lent\n";;
 esac
-sed -i 's/deb.debian.org/debian.proxad.net/' /etc/apt/sources.list
+# https://askubuntu.com/a/880605
+if [  -n "$(uname -a | grep Ubuntu)" ]; then
+    sed -i 's/fr.archive.ubuntu.com/ubuntu-archive.mirrors.proxad.net/' /etc/apt/sources.list
+else
+    sed -i 's/fr.archive.ubuntu.com/ubuntu-archive.mirrors.proxad.net/' /etc/apt/sources.list
+fi  
 apt update && apt -y full-upgrade && apt install -y curl git jq megatools nmap openjdk-17-jdk python3-pip screen ufw unattended-upgrades unzip webp && pip3 install -q gdown dynmap_timemachine pwncat-cs yt-dlp
 read -r -p "Voulez-vous installer Cloudflare Dynamic DNS IP Updater ? [O/n] " response
 case "$response" in
