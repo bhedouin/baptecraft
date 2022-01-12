@@ -36,7 +36,7 @@ if [  -n "$(uname -a | grep Ubuntu)" ]; then
 else
     sed -i 's/fr.archive.ubuntu.com/ubuntu-archive.mirrors.proxad.net/' /etc/apt/sources.list
 fi  
-apt update && apt -y full-upgrade && apt install -y curl git jq megatools nmap openjdk-17-jdk python3-pip screen ufw unattended-upgrades unzip webp && pip3 install -q gdown dynmap_timemachine pwncat-cs yt-dlp
+apt update -qq && apt -qq -y full-upgrade && apt install -qq -y curl git jq megatools nmap openjdk-17-jdk python3-pip screen ufw unattended-upgrades unzip webp && pip3 install -q dynmap_timemachine pwncat-cs yt-dlp
 read -r -p "Voulez-vous installer Cloudflare Dynamic DNS IP Updater ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
@@ -100,10 +100,6 @@ case "$response" in
     [oO][eE][sS]|[oO]) 
         mkdir /home/minecraft && cd /home/minecraft || exit
         wget -q https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
-        gdown -g https://drive.google.com/file/d/1EPJiNZqa0whfJrJOrMz3_QiL-MxWMDFm/view?usp=sharing
-        unzip -qq baptecraft.zip
-        mv /home/minecraft/baptecraft/* /home/minecraft
-        sed -i "s/network-compression-threshold=256/network-compression-threshold=512/g" server.properties
         sed -i "s/spawn-protection=16/spawn-protection=0/g" server.properties
         sed -i "s/snooper-enabled=true/snooper-enabled=false/g" server.properties
         sed -i "s/max-tick-time=60000/max-tick-time=120000/g" server.properties
