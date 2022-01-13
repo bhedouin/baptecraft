@@ -130,7 +130,7 @@ case "$response" in
         printf "— $(tput setaf 3)http://%s$(hostname -I | awk '{print $1}'):81\n$(tput sgr 0)"
         ;;
 esac
-read -r -p "Do you want to install the Portainer? [O/n] " response
+read -r -p "Voulez-vous installer Portainer? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
         printf "Quel port souhaitez-vous utiliser pour Portainer ?"
