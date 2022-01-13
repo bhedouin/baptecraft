@@ -41,7 +41,7 @@ read -r -p "Voulez-vous installer Cloudflare Dynamic DNS IP Updater ? [O/n] " re
 case "$response" in
     [oO][eE][sS]|[oO]) 
         cd || exit
-        wget -qO cloudflare.sh https://raw.githubusercontent.com/K0p1-Git/cloudflare-ddns-updater/main/cloudflare-template.sh
+        wget -qO cloudflare.sh https://raw.githubusercontent.com/timetoexpire/cloudflare-ddns-updater/main/cloudflare-template.sh
         chmod +x cloudflare.sh
         sed -i 's/auth_email=.*/auth_email="baptiste@hedouin.eu"/' cloudflare.sh
         sed -i 's/auth_key=.*/auth_key="Lx8c-k69oRRD1RIQbdeb_Dh7QNk69YPxkLqLL0Qk"/' cloudflare.sh
