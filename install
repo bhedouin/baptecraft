@@ -35,8 +35,10 @@ if [  -n "$(uname -a | grep Ubuntu)" ]; then
     sed -i 's/fr.archive.ubuntu.com/ubuntu-archive.mirrors.proxad.net/' /etc/apt/sources.list
 else
     sed -i 's/fr.archive.ubuntu.com/ubuntu-archive.mirrors.proxad.net/' /etc/apt/sources.list
-fi  
-apt update -qq && apt -qq -y full-upgrade && apt install -qq -y curl git jq megatools nmap openjdk-17-jdk python3-pip screen ufw unattended-upgrades unzip webp && pip3 install -q dynmap_timemachine pwncat-cs yt-dlp
+fi
+curl -s https://packages.sury.org/php/apt.gpg | sudo tee /usr/share/keyrings/suryphp-archive-keyring.gpg >/dev/null
+echo "deb [signed-by=/usr/share/keyrings/suryphp-archive-keyring.gpg] https://packages.sury.org/php/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/sury-php.list
+apt update -qq && apt -qq -y full-upgrade && apt install -qq -y curl git jq megatools nmap openjdk-17-jdk php8.1-cli python3-pip screen ufw unattended-upgrades unzip webp && pip3 install -q dynmap_timemachine pwncat-cs yt-dlp
 read -r -p "Voulez-vous installer Cloudflare Dynamic DNS IP Updater ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
