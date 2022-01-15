@@ -66,18 +66,26 @@ case "$response" in
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Cloudflare Dynamic DNS IP Updater\n"
         ;;
 esac
+read -r -p "Voulez-vous installer WireGuard ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        cd || exit
+        bash <(wget -qO- https://raw.githubusercontent.com/Nyr/wireguard-install/master/wireguard-install.sh)
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de WireGuard\n"
+        ;;
+esac
 read -r -p "Voulez-vous installer OpenVPN ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
         cd || exit
-        wget -qO openvpn-install.sh https://raw.githubusercontent.com/Nyr/openvpn-install/master/openvpn-install.sh && bash openvpn-install.sh
+        bash <(wget -qO- https://raw.githubusercontent.com/Nyr/openvpn-install/master/openvpn-install.sh)
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de OpenVPN\n"
         ;;
 esac
 read -r -p "Voulez-vous installer CrowdSec ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
-        wget -qO crowdsec-install.sh https://packagecloud.io/install/repositories/crowdsec/crowdsec/script.deb.sh && bash crowdsec-install.sh > /dev/null 2>&1
+        bash <(wget -qO- https://packagecloud.io/install/repositories/crowdsec/crowdsec/script.deb.sh)
         apt install -y crowdsec
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de CrowdSec\n"
         ;;
@@ -85,7 +93,7 @@ esac
 read -r -p "Voulez-vous installer Docker ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
-        wget -qO docker-install.sh https://raw.githubusercontent.com/docker/docker-install/master/install.sh && bash docker-install.sh
+        bash <(wget -qO- https://raw.githubusercontent.com/docker/docker-install/master/install.sh)
         apt install -y -qq --no-install-recommends docker-ce-cli docker-ce >/dev/null
         apt install -y -qq docker-ce-rootless-extras >/dev/null
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Docker\n"
