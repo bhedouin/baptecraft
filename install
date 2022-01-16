@@ -66,7 +66,13 @@ case "$response" in
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Cloudflare Dynamic DNS IP Updater\n"
         ;;
 esac
-read -r -p "Voulez-vous installer WireGuard ? [O/n] " response
+read -r -p "Voulez-vous paramétrer iptables ? [O/n] " response
+case "$response" in
+    [oO][eE][sS]|[oO]) 
+        bash <(wget -qO- https://gist.githubusercontent.com/baptiste313/9d43a174128090820e161b132b6e6004/raw/094003069696a49b9bf3db64f304e860da1d7459/iptables.sh)
+        printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Installation réussie de Cloudflare Dynamic DNS IP Updater\n"
+        ;;
+esacread -r -p "Voulez-vous installer WireGuard ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
         cd || exit
