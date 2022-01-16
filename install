@@ -201,6 +201,7 @@ esac
 read -r -p "Voulez-vous modifier /etc/ssh/sshd_config ? [O/n] " response
 case "$response" in
     [oO][eE][sS]|[oO]) 
+        ufw limit ssh
         sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
         printf "\n[$(tput setaf 2)✓$(tput sgr 0)] Edition réussie de ssh\n"
         ;;
