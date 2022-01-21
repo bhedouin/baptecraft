@@ -36,6 +36,7 @@ if [  -n "$(uname -a | grep Ubuntu)" ]; then
 else
     sed -i 's/deb.debian.org/debian.proxad.net/' /etc/apt/sources.list
 fi
+timedatectl set-timezone "Europe/Paris"
 curl -s https://packages.sury.org/php/apt.gpg | sudo tee /usr/share/keyrings/suryphp-archive-keyring.gpg >/dev/null
 echo "deb [signed-by=/usr/share/keyrings/suryphp-archive-keyring.gpg] https://packages.sury.org/php/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/sury-php.list
 apt update -qq && apt -qq -y full-upgrade && apt install -qq -y certbot curl git jq megatools nmap openjdk-17-jdk php-fpm python3-certbot-apache python3-pip screen ufw unattended-upgrades unzip webp && pip3 install -q dynmap_timemachine pwncat-cs yt-dlp
