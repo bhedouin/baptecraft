@@ -33,7 +33,6 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/halfmoon/css/halfmoon.min.css" />
         <!-- Font awesome -->
         <link href="https://pro.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet" />
-<script src="https://js.linkz.ai/?key=61f2aeb58ccdf20069b0ea39"></script>
     </head>
     <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true" data-sidebar-shortcut-enabled="true" data-set-preferred-mode-onload="true" id="tsparticles">
         <div class="modal" id="Download" tabindex="-1" role="dialog">
@@ -204,7 +203,7 @@
                             <div class="alert filled hidden-lm" role="alert" style="border-color: #5865f2!important; color: rgba(0,0,0,.85) !important; background-color: #5865f2!important;">
                                 Rejoignez nos
                                 <b>
-                                    <span class="small brm--js-discordCount">0</span>
+                                    <span class="small discordCount">0</span>
                                 </b>
                                 membres actifs sur notre
                                 <a style="color: black; text-decoration: none;" href="https://discord.gg/tewEz75czN">Discord</a>.
@@ -212,7 +211,7 @@
                             <div class="alert alert-primary hidden-dm" role="alert">
                                 Rejoignez nos
                                 <b>
-                                    <span class="small brm--js-discordCount">0</span>
+                                    <span class="small discordCount">0</span>
                                 </b>
                                 membres actifs sur notre
                                 <a style="color: black; text-decoration: none;" href="https://discord.gg/tewEz75czN">Discord</a>.
@@ -265,7 +264,6 @@
                                     <a href="https://www.serveurs-minecraft.org/">Serveur Minecraft</a>
                                 </p>
                                 <button class="btn btn-primary btn-block copy-address" data-clipboard-text="play.baptecraft.ovh" type="button" onclick="halfmoon.toastAlert('precompiled-alert-1', 7500)">play.baptecraft.ovh</button>
-                                <button class="btn btn-primary btn-block copy-address mt-10" data-clipboard-text="forge.baptecraft.ovh" type="button" onclick="halfmoon.toastAlert('precompiled-alert-1', 7500)">forge.baptecraft.ovh</button>
                                 <details class="collapse-panel mt-10">
                                     <summary class="collapse-header">Comment se connecter ?</summary>
                                     <div class="collapse-content">
@@ -293,15 +291,15 @@
         <script src="https://cdn.jsdelivr.net/npm/clipboard-js/clipboard.min.js"></script>
         <script type="text/javascript">
         // COMPTEUR DISCORD
-        var discord_key = "823450591601885194";
-        if ($('.brm--js-discordCount').length && discord_key.length) {
-            window.onerror = function(msg, url, ln) {
-                return (msg === "Impossible de trouver la classe du compteur Discord.");
-            };
-            $.get('https://discord.com/api/guilds/' + discord_key + '/embed.json', function(d) {
-                $('.brm--js-discordCount').html(d.presence_count-1);
-            });
-        }
+        var xmlHttpRequest = new XMLHttpRequest();
+            xmlHttpRequest.open("GET", "https://discord.com/api/guilds/823450591601885194/embed.json", true);
+            xmlHttpRequest.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var d = JSON.parse(this.responseText);
+                    document.getElementById("discordCount").innerHTML = d.presence_count;
+                }  
+            };  
+        xmlHttpRequest.send();
         // COPIE ADRESSE IP
         var clipboard = new ClipboardJS('.copy-address');
         clipboard.on('success', function(e) {
