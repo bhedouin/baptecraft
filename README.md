@@ -1,6 +1,8 @@
 <div align="center">
 
-# [![](https://baptecraft.ovh/23C2G.png)](https://baptecraft.ovh/)
+# [![](23C2G.png)](https://baptecraft.ovh/)
+
+[![jsDelivr monthly hits](https://data.jsdelivr.com/v1/package/gh/baptiste313/baptecraft/badge)](https://cdn.jsdelivr.net/gh/baptiste313/baptecraft@master/)
 
 [![](https://img.shields.io/website.svg?down_color=red&down_message=down&up_color=green&up_message=up&url=https://baptecraft.ovh&style=for-the-badge)](https://baptecraft.ovh/)
 [![](https://img.shields.io/discord/823450591601885194?color=5865F2&label=discord&style=for-the-badge)](https://discord.gg/tewEz75czN)
